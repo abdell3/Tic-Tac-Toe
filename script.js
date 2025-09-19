@@ -94,11 +94,11 @@ function checkWin(r, c) {
         }
         return false;
     }
-    if (board[r].every(cell => cell === currentPlayer) || hasK(board[r])){
+    if (hasK(board[r])){
         return true;
     }
     
-    if (board.every(row => row[c] === currentPlayer) || hasK(board.map(row => row[c]))){ 
+    if (hasK(board.map(row => row[c]))){ 
         return true;
     }
     if (r === c) {
@@ -113,6 +113,26 @@ function checkWin(r, c) {
             return true;
         }
     }
+
+    let diag1 = [];
+    for (let i = 0; i < size; i++) {
+        let row = r - c + i;
+        if (row >= 0 && row < size) {
+            diag1.push(board[row][i]);
+        }
+    }
+    if (hasK(diag1)) return true;
+
+    let diag2 = [];
+    for (let i = 0; i < size; i++) {
+        let row = r + c - i;
+        if (row >= 0 && row < size) {
+            diag2.push(board[row][i]);
+        }
+    }
+    if (hasK(diag2)) return true;
+
+
     return false;
 }
 
